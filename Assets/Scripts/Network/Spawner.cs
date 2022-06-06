@@ -8,6 +8,8 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
 {
     [SerializeField] private NetworkPlayer _playerPrefab;
 
+    private CharacterInputHandler _characterInputHandler;
+
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         if (runner.IsServer)
@@ -23,7 +25,15 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
+        if (_characterInputHandler == null && NetworkPlayer.Local != null)
+        {
+            _characterInputHandler = NetworkPlayer.Local.GetComponent<CharacterInputHandler>();
+        }
 
+        if (_characterInputHandler != null)
+        {
+            input.Set(_characterInputHandler.GetNetworkInput());
+        }
     }
 
     public void OnConnectedToServer(NetworkRunner runner) { Debug.Log("OnConnectedToServer"); }

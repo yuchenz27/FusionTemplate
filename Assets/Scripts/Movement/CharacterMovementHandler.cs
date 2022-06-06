@@ -5,6 +5,10 @@ using Fusion;
 
 public class CharacterMovementHandler : NetworkBehaviour
 {
+    private Vector2 _viewInput;
+
+    //
+
     private NetworkCharacterControllerPrototypeCustom _networkCharacterControllerPrototypeCustom;
 
     private void Awake()
@@ -17,10 +21,18 @@ public class CharacterMovementHandler : NetworkBehaviour
          // Get the input from the network
          if (GetInput(out NetworkInputData networkInputData))
         {
+            // Rotate
+            _networkCharacterControllerPrototypeCustom.Rotate(networkInputData.rotationInput);
+
             // Move
             Vector3 moveDirection = transform.forward * networkInputData.movementInput.y + transform.right * networkInputData.movementInput.x;
             moveDirection.Normalize();
             _networkCharacterControllerPrototypeCustom.Move(moveDirection);
         }
+    }
+
+    public void SetViewInputVector(Vector2 viewInput)
+    {
+        _viewInput = viewInput;
     }
 }
