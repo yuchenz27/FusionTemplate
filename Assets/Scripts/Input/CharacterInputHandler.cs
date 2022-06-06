@@ -19,7 +19,7 @@ public class CharacterInputHandler : MonoBehaviour
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
 
-        var canvas = FindObjectOfType<UnityEngine.UI.CanvasScaler>();
+        var canvas = FindObjectOfType<MainCanvas>();
         _upButton = canvas.transform.Find("Up Button").GetComponent<ScreenButton>();
         _downButton = canvas.transform.Find("Down Button").GetComponent<ScreenButton>();
         _leftButton = canvas.transform.Find("Left Button").GetComponent<ScreenButton>();
